@@ -8,7 +8,17 @@ import summerSound from "./assets/sounds/summer.mp3"
 import rainSound from "./assets/sounds/rain.mp3"
 import winterSound from "./assets/sounds/winter.mp3"
 
-export const weather = {
+interface IWeatherCondition {
+    sound: string;
+    icon: string;
+    weatherBg: string;
+}
+
+interface IWeather {
+    [key: string]: IWeatherCondition;
+}
+
+export const weather: IWeather = {
 	summer: {
 		sound: summerSound,
 		icon: sunIcon,

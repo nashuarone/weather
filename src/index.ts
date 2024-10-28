@@ -2,31 +2,31 @@ import { weather } from './data'
 import pauseIcon from './assets/icons/pause.svg'
 import './index.scss'
 
-const audio = document.getElementById('audio')
-const rangeInputs = document.querySelector('input[type="range"]')
-const body = document.querySelector('body')
-const btn = document.querySelectorAll('.bnt')
+const audio = document.getElementById('audio') as HTMLAudioElement
+const rangeInputs = document.querySelector('input[type="range"]') as HTMLInputElement
+const body = document.querySelector('body') as HTMLBodyElement
+const btns = document.querySelectorAll('.bnt')
 
-function handleInputChange(e) {
-    let target = e.target
-    if (e.target.type !== 'range') {
-        target = document.getElementById('range')
+function handleInputChange(e: Event) {
+    let target: HTMLInputElement = e.target as HTMLInputElement;
+    if (target.type !== 'range') {
+        target = document.getElementById('range') as HTMLInputElement
     }
     const min = target.min
     const max = target.max
     const val = target.value
 
-    target.style.backgroundSize = ((val - min) * 100) / (max - min) + '% 100%'
+    target.style.backgroundSize = ((+val - +min) * 100) / (+max - +min) + '% 100%'
 
-    audio.volume = target.value / 100
+    audio.volume = +target.value / 100
 }
 
 rangeInputs.addEventListener('input', handleInputChange)
 
-let currentWeather = null
+let currentWeather: string | null = null
 let pause = false
 
-const handleBtnClick = (e) => {
+const handleBtnClick = (e: HTMLButtonElement): void => {
     pause = !pause
     audio.pause()
     e.firstElementChild.setAttribute('src', pauseIcon)
@@ -38,7 +38,7 @@ const handleBtnClick = (e) => {
         body.style.backgroundImage = `url(${weather[currentWeather].weatherBg})`
     }
 
-    btn.forEach((b) => {
+    btns.forEach((b) => {
         if (b.id !== currentWeather) {
             b.firstElementChild.setAttribute('src', `${weather[b.id].icon}`)
         }
@@ -52,8 +52,8 @@ const handleBtnClick = (e) => {
     }
 }
 
-btn.forEach((b) => {
-    b.addEventListener('click', () => handleBtnClick(b))
+btns.forEach((b) => {
+    b.addEventListener('click', () => handleBtnClick(b as HTMLButtonElement))
     const itemIcon = document.createElement('img')
     itemIcon.setAttribute('height', '50')
     itemIcon.setAttribute('width', '50')
